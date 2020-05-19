@@ -1,10 +1,10 @@
 ---
 layout: archive
-permalink: /machine-learning/
-title: "Machine Learning Posts"
+permalink: /data-visualizations/
+title: "Data Visualizations"
 author_profile: true
 header:
-  image: "/images/ml.jpg"
+  image: "/images/header.jpg"
 ---
 
 
