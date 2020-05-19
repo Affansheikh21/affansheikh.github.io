@@ -10,4 +10,5 @@ header:
 
 {% for post in site.categories.datavisualization %}
     <li>{{ post.title }}</li>
+      {% include archive-single.html %}
 {% endfor %}
