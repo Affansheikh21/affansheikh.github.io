@@ -10,7 +10,7 @@ header:
 
 <ul>
 {% for category in site.categories %}
-	{% if page.categories contains "datavisualization" %}	
+	{% if category contains "datavisualization" %}	
 	  <li><a name="{{ category | first }}">{{ category | first }}</a>
 	    <ul>
 	    {% for post in category.last %}
