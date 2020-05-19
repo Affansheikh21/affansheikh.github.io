@@ -86,7 +86,7 @@ analytics:
 author:
   name             : "Mohammad Affan Sheikh"
   avatar           : "/images/bio.jpeg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "An IBA Graduate who's passionate about Data Science"
+  bio              : "A CS Graduate who's passionate about Data Science."
   location         : "Pakistan"
   email            :
   uri              :
