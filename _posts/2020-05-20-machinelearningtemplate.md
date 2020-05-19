@@ -3,7 +3,7 @@ title: "Machine Learning Template"
 date: 2020-05-20
 tags: [machine learning, linear regression, classification]
 header:
-  image: "/images/perceptron/percept.jpg"
+  image: "/images/mltemplate/header.jpg"
 excerpt: "Machine Learning Template"
 mathjax: "true"
 ---
