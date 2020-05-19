@@ -2,7 +2,7 @@
 title: "About"
 permalink: /about/
 header:
-  image: "/images/about_header.jpg"
+  image: "/images/about/about_header.jpg"
 ---
 
 I am a Computer Science Graduate from The Institute of Business Administration Karachi (IBA). I am passionate about transforming Businesses by leveraging Data Science and Machine Learning. 
