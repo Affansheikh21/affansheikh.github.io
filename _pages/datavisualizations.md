@@ -8,16 +8,6 @@ header:
 ---
 
 
-<ul>
-{% for category in site.categories %}
-	{% if category contains "datavisualization" %}	
-	  <li><a name="{{ category | first }}">{{ category | first }}</a>
-	    <ul>
-	    {% for post in category.last %}
-	      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-	    {% endfor %}
-	    </ul>
-	  </li>
-		{% endif %}
-	{% endfor %}
-	</ul>
+{% for post in site.categories.datavisualization %}
+    <li>{{ post.title }}</li>
+{% endfor %}
