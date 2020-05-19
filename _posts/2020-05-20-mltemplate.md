@@ -2,6 +2,7 @@
 title: "Machine Learning Template"
 date: 2020-05-20
 tags: [machine learning]
+category: machinelearning
 header:
   image: "/images/mltemplate/header.jpg"
 excerpt: "A Guide to Machine Learning in Python"
