@@ -38,7 +38,7 @@ nltk.download_shell()
 
 #### Reading the File
 
-[Here is the Link to Data](https://github.com/Affansheikh21/Datasets/tree/master/smsspamcollection)
+[Here is the Link to Data](https://github.com/Affansheikh21/Datasets)
 
 ```python
 messages = [line.rstrip() for line in open('smsspamcollection/SMSSpamCollection')]
