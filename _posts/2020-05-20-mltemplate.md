@@ -13,6 +13,10 @@ mathjax: "true"
 
 
 
+
+
+
+
 ### Mohammad Affan Sheikh
 <font color='maroon'><h3>Institute of Business Administration Karachi (IBA)</h3></font>
 #### LinkedIn: [view profile](https://www.linkedin.com/in/mohammad-affan-sheikh/) 
@@ -31,7 +35,7 @@ mathjax: "true"
 </ol>   
  
 
-### [2- Model Development](#md)
+  ### [2- Model Development](#md)
 
 <ol>
 <li>Features Selection</li>
@@ -549,294 +553,6 @@ def cross_valid_strat_shuffle_kf(X, y, split=10, random=None):
         yield trainX,trainY,testX,testY
 ```
 
-## Feature Selection
-
-### *Random Forest Feature Selection*
-
-
-```python
-def RFfeatureimportance(df, trainX, testX, trainY, testY, trees=10, random=None, regression=False):
-    if regression:
-        clf  = RandomForestRegressor(n_estimators=trees, random_state=random)
-    else:
-        clf  = RandomForestClassifier(n_estimators=trees, random_state=random)
-    clf.fit(trainX,trainY)
-    #validationmetrics(clf,testX,testY)
-    res = pd.Series(clf.feature_importances_, index=df.columns.values).sort_values(ascending=False)*100
-    print(res)
-    return res
-```
-
-### *Run Algo with selected features*
-
-
-```python
-#select features with importance >=threshold
-def MachineLearningwithRFFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
-    # lets create a copy of this dataframe and perform feature selection analysis over that
-    df_cpy = df.copy()
-    df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
-    res = RFfeatureimportance(df_cpy, trainX, testX, trainY, testY, trees=10, regression=regression)
-    
-    impftrs = list(res[res > threshold].keys())
-    #impftrs.append(label_col)
-    
-    print ("Selected Features =" + str(impftrs))
-    print(df.shape)
-    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=impftrs)
-    return {"selected_features": impftrs, "results": results}
-
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-29-d14427beebec> in <module>
-          1 #select features with importance >=threshold
-    ----> 2 def MachineLearningwithRFFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
-          3     # lets create a copy of this dataframe and perform feature selection analysis over that
-          4     df_cpy = df.copy()
-          5     df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
-    
-
-    NameError: name 'get_supported_algorithms' is not defined
-
-
-### *With Cross Validation*
-
-
-```python
-#select features with importance >=threshold
-def MachineLearningwithRFFS_CV(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
-    # lets create a copy of this dataframe and perform feature selection analysis over that
-    df_cpy = df.copy()
-    df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
-    res = RFfeatureimportance(df_cpy, trainX, testX, trainY, testY,
-                              trees=10, regression=regression)
-
-    impftrs = list(res[res > threshold].keys())
-    
-    print ("Selected Features =" + str(impftrs))
-    print(df.shape)
-    if regression:
-        cross_valid_method = cross_valid_kfold
-    else:
-        cross_valid_method = cross_valid_stratified_kf
-    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=impftrs, cross_valid_method=cross_valid_method)
-    return {"selected_features": impftrs, "results": results}
-    
-```
-
-### *Mutual Information Feature Selection*
-
-
-```python
-#determine the important features given by MIFS
-def mutualinformation(df, label_col, regression=False):
-    df_cpy = df.copy()
-    y = df_cpy[label_col].copy()
-    X = df_cpy.drop(label_col,axis=1)
-    if regression:
-        mutual_info = mutual_info_regression(X,y,random_state=35)
-    else:
-        mutual_info = mutual_info_classif(X,y,random_state=35)
-    results = pd.Series(mutual_info, index=X.columns).sort_values(ascending=False)*100
-    print(results)
-    return results
-```
-
-### *Without Cross Validation*
-
-
-```python
-#### Without Cross Validation
-#select features with importance >=threshold
-def MachineLearningwithMIFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
-    
-    # lets create a copy of this dataframe and perform feature selection analysis over that
-    df_cpy = df.copy()
-    res = mutualinformation(df_cpy, label_col=label_col, regression=regression)
-    
-    #include all selected features in impftrs
-    impftrs = list(res[res > threshold].keys())
-    
-    print ("Selected Features =" + str(impftrs))
-    
-    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=impftrs)
-    return {"selected_features": impftrs, "results": results}
-```
-
-### *With Cross Validation*
-
-
-```python
-#### With Cross Validation
-#select features with importance >=threshold
-def MachineLearningwithMIFS_CV(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
-    
-    # lets create a copy of this dataframe and perform feature selection analysis over that
-    df_cpy = df.copy()
-    res = mutualinformation(df_cpy, label_col=label_col, regression=regression)
-    
-    #include all selected features in impftrs
-    impftrs = list(res[res > threshold].keys())
-    
-    print ("Selected Features =" + str(impftrs))
-    if regression:
-        cross_valid_method = cross_valid_kfold
-    else:
-        cross_valid_method = cross_valid_stratified_kf
-    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=impftrs, cross_valid_method=cross_valid_method)
-    return {"selected_features": impftrs, "results": results}
-
-```
-
-### *Recursive Elimination Feature Selection*
-
-
-```python
-def GenericREFS(df, label_col,
-                algo_list=get_supported_algorithms(),
-                re_algo=RandomForestClassifier,
-                **kwargs):
-    
-    X,y = XYsplit(df, label_col)
-    clf = re_algo(**kwargs)
-    selector = RFE(estimator=clf, step=1)
-    selector = selector.fit(X,y)
-    feature_list = X.columns[selector.support_].tolist()
-    
-    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=feature_list)
-    return {"selected_features": feature_list, "results": results}
-```
-
-### *With Cross Validation*
-
-
-```python
-#### With Cross Validation
-def GenericREFS_CV(df, label_col,
-                algo_list=get_supported_algorithms(),
-                regression=False,
-                re_algo=RandomForestClassifier,
-                **kwargs):
-    
-    X,y = XYsplit(df, label_col)
-    clf = re_algo(**kwargs)
-    selector = RFECV(estimator=clf, step=1, cv=10)
-    selector = selector.fit(X,y)
-    feature_list = X.columns[selector.support_].tolist()
-    if regression:
-        cross_valid_method = cross_valid_kfold
-    else:
-        cross_valid_method = cross_valid_stratified_kf
-    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=feature_list, cross_valid_method=cross_valid_method)
-    return {"selected_features": feature_list, "results": results}
-
-```
-
-
-```python
-# Helper function to provide list of classification algorithms to be used for recursive elimination feature selection
-def get_supported_algorithms_refs():
-    algo_list = [LogisticRegression, GradientBoostingClassifier, AdaBoostClassifier,
-                          DecisionTreeClassifier, RandomForestClassifier]
-    return algo_list
-
-# Helper function to provide list of regression algorithms to be used for recursive elimination feature selection
-def get_supported_reg_algorithms_refs():
-    algo_list = [LinearRegression, RandomForestRegressor,
-                 DecisionTreeRegressor, GradientBoostingRegressor, AdaBoostRegressor]
-    return algo_list
-```
-
-### *Feature Selection Using PCA*
-
-
-```python
-#Without Cross Validation
-def PCA_FS(df, label_col, n_components, algo_list=get_supported_algorithms()):
-    df_cpy = df.copy()
-    X,y = XYsplit(df_cpy, label_col)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    
-    # First we need to normalize the data
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_test = sc.transform(X_test)
-    
-    # Now perform PCA
-    pca = PCA(n_components=n_components)
-    X_train = pca.fit_transform(X_train)
-    X_test = pca.transform(X_test)
-    
-    algo_model_map = {}
-    # At this stage we apply alogorithms
-    for algo in algo_list:
-        print("============ " + algo.__name__ + " ===========")
-        res = algo(X_train, X_test, y_train, y_test)
-        algo_model_map[algo.__name__] = res.get("model_obj", None)
-        
-        print("============================== \n")
-    return {"n_components": n_components, "results": algo_model_map}
-```
-
-### *With Cross Validation*
-
-
-```python
-#### With Cross Validation
-def PCA_FS_CV(df, label_col, n_components, algo_list=get_supported_algorithms(), regression=False):
-    df_cpy = df.copy()
-    X,y = XYsplit(df_cpy, label_col)
-    
-    cross_valid_method = cross_valid_kfold if regression else cross_valid_stratified_kf 
-    result = {}
-    algo_model_map = {}
-    for algo in algo_list:
-        clf = None
-        result[algo.__name__] = dict()
-        for X_train,y_train,X_test,y_test in cross_valid_method(X, y, split=10):
-            # First we need to normalize the data
-            sc = StandardScaler()
-            X_train = sc.fit_transform(X_train)
-            X_test = sc.transform(X_test)
-            
-            # Now perform PCA
-            pca = PCA(n_components=n_components)
-            X_train = pca.fit_transform(X_train)
-            X_test = pca.transform(X_test)
-            
-            # apply algo on this fold and save result for later usage
-            res_algo = algo(X_train, X_test, y_train, y_test, verbose=False, clf=clf)
-            # Get trained model so we could use it again in the next iteration
-            clf = res_algo.get("model_obj", None)
-            
-            for k,v in res_algo.items():
-                if k == "model_obj":
-                    continue
-                if k not in result[algo.__name__].keys():
-                    result[algo.__name__][k] = list()
-                result[algo.__name__][k].append(v)
-            
-        algo_model_map[algo.__name__] = clf
-        
-    
-    score_map = dict()
-    # let take average scores for all folds now
-    for algo, metrics in result.items():
-        print("============ " + algo + " ===========")
-        score_map[algo] = dict()
-        for metric_name, score_lst in metrics.items():
-            score_map[algo][metric_name] = np.mean(score_lst)
-        print(score_map[algo])
-        print ("============================== \n")
-        score_map[algo]["model_obj"] =  algo_model_map[algo]
-    return {"n_components": n_components, "results": algo_model_map}
-```
-
 ## Model Building
 
 <font color='red'><h2>Classification</h2></font>
@@ -1080,15 +796,13 @@ def VotingReg(trainX, testX, trainY, testY, verbose=True, clf=None):
 
 
 ```python
-def get_supported_classification_algorithms():
-    covered_algorithms = [LogReg, KNN, GadientBoosting, AdaBoost,
-                          SVM, DecisionTree, RandomForest, NaiveBayes,
-                          MultiLayerPerceptron]
-    if XGBClassifier:
-        covered_algorithms.append(XgBoost)
-    if lgb:
-        covered_algorithms.append(LightGbm)
-    return covered_algorithms
+def get_supported_algorithms(classification=False,regression=False):
+    if classification:
+        algo_list = get_supported_classification_algorithms()
+    else:
+        algo_list = get_supported_regression_algorithms()
+    return algo_list
+    
 ```
 
 
@@ -1097,17 +811,6 @@ def get_supported_regression_algorithms():
     covered_algorithms = [LinearReg, RandomForestReg, PolynomialReg, SupportVectorRegression,
                           DecisionTreeReg, GradientBoostingReg, AdaBooostReg, VotingReg]
     return covered_algorithms
-```
-
-
-```python
-def get_supported_algorithms(classification=False,regression=False):
-    if classification:
-        algo_list = get_supported_classification_algorithms()
-    else:
-        algo_list = get_supported_regression_algorithms()
-    return algo_list
-    
 ```
 
 
@@ -1136,6 +839,25 @@ def find_best_model(df,label_col,feature_list=[]):
     return algo_model_map
     
     
+```
+
+
+```python
+#select features with importance >=threshold
+def MachineLearningwithRFFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
+    # lets create a copy of this dataframe and perform feature selection analysis over that
+    df_cpy = df.copy()
+    df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
+    res = RFfeatureimportance(df_cpy, trainX, testX, trainY, testY, trees=10, regression=regression)
+    
+    impftrs = list(res[res > threshold].keys())
+    #impftrs.append(label_col)
+    
+    print ("Selected Features =" + str(impftrs))
+    print(df.shape)
+    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=impftrs)
+    return {"selected_features": impftrs, "results": results}
+
 ```
 
 
@@ -1273,7 +995,274 @@ def validationmetrics_reg(model,testX,testY, verbose=True):
     return res_map
 ```
 
+## Feature Selection
+
+### *Random Forest Feature Selection*
+
 
 ```python
+def RFfeatureimportance(df, trainX, testX, trainY, testY, trees=10, random=None, regression=False):
+    if regression:
+        clf  = RandomForestRegressor(n_estimators=trees, random_state=random)
+    else:
+        clf  = RandomForestClassifier(n_estimators=trees, random_state=random)
+    clf.fit(trainX,trainY)
+    #validationmetrics(clf,testX,testY)
+    res = pd.Series(clf.feature_importances_, index=df.columns.values).sort_values(ascending=False)*100
+    print(res)
+    return res
+```
 
+### *Run Algo with selected features*
+
+
+```python
+#select features with importance >=threshold
+def MachineLearningwithRFFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
+    # lets create a copy of this dataframe and perform feature selection analysis over that
+    df_cpy = df.copy()
+    df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
+    res = RFfeatureimportance(df_cpy, trainX, testX, trainY, testY, trees=10, regression=regression)
+    
+    impftrs = list(res[res > threshold].keys())
+    #impftrs.append(label_col)
+    
+    print ("Selected Features =" + str(impftrs))
+    print(df.shape)
+    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=impftrs)
+    return {"selected_features": impftrs, "results": results}
+
+```
+
+### *With Cross Validation*
+
+
+```python
+#select features with importance >=threshold
+def MachineLearningwithRFFS_CV(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
+    # lets create a copy of this dataframe and perform feature selection analysis over that
+    df_cpy = df.copy()
+    df_cpy, trainX, testX, trainY, testY = traintestsplit(df_cpy, 0.2, 91, label_col=label_col)
+    res = RFfeatureimportance(df_cpy, trainX, testX, trainY, testY,
+                              trees=10, regression=regression)
+
+    impftrs = list(res[res > threshold].keys())
+    
+    print ("Selected Features =" + str(impftrs))
+    print(df.shape)
+    if regression:
+        cross_valid_method = cross_valid_kfold
+    else:
+        cross_valid_method = cross_valid_stratified_kf
+    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=impftrs, cross_valid_method=cross_valid_method)
+    return {"selected_features": impftrs, "results": results}
+    
+```
+
+### *Mutual Information Feature Selection*
+
+
+```python
+#determine the important features given by MIFS
+def mutualinformation(df, label_col, regression=False):
+    df_cpy = df.copy()
+    y = df_cpy[label_col].copy()
+    X = df_cpy.drop(label_col,axis=1)
+    if regression:
+        mutual_info = mutual_info_regression(X,y,random_state=35)
+    else:
+        mutual_info = mutual_info_classif(X,y,random_state=35)
+    results = pd.Series(mutual_info, index=X.columns).sort_values(ascending=False)*100
+    print(results)
+    return results
+```
+
+### *Without Cross Validation*
+
+
+```python
+#### Without Cross Validation
+#select features with importance >=threshold
+def MachineLearningwithMIFS(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
+    
+    # lets create a copy of this dataframe and perform feature selection analysis over that
+    df_cpy = df.copy()
+    res = mutualinformation(df_cpy, label_col=label_col, regression=regression)
+    
+    #include all selected features in impftrs
+    impftrs = list(res[res > threshold].keys())
+    
+    print ("Selected Features =" + str(impftrs))
+    
+    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=impftrs)
+    return {"selected_features": impftrs, "results": results}
+```
+
+### *With Cross Validation*
+
+
+```python
+#### With Cross Validation
+#select features with importance >=threshold
+def MachineLearningwithMIFS_CV(df, label_col, threshold=5, algo_list=get_supported_algorithms(), regression=False):
+    
+    # lets create a copy of this dataframe and perform feature selection analysis over that
+    df_cpy = df.copy()
+    res = mutualinformation(df_cpy, label_col=label_col, regression=regression)
+    
+    #include all selected features in impftrs
+    impftrs = list(res[res > threshold].keys())
+    
+    print ("Selected Features =" + str(impftrs))
+    if regression:
+        cross_valid_method = cross_valid_kfold
+    else:
+        cross_valid_method = cross_valid_stratified_kf
+    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=impftrs, cross_valid_method=cross_valid_method)
+    return {"selected_features": impftrs, "results": results}
+
+```
+
+### *Recursive Elimination Feature Selection*
+
+
+```python
+def GenericREFS(df, label_col,
+                algo_list=get_supported_algorithms(),
+                re_algo=RandomForestClassifier,
+                **kwargs):
+    
+    X,y = XYsplit(df, label_col)
+    clf = re_algo(**kwargs)
+    selector = RFE(estimator=clf, step=1)
+    selector = selector.fit(X,y)
+    feature_list = X.columns[selector.support_].tolist()
+    
+    results = run_algorithms(df, label_col, algo_list=algo_list, feature_list=feature_list)
+    return {"selected_features": feature_list, "results": results}
+```
+
+### *With Cross Validation*
+
+
+```python
+#### With Cross Validation
+def GenericREFS_CV(df, label_col,
+                algo_list=get_supported_algorithms(),
+                regression=False,
+                re_algo=RandomForestClassifier,
+                **kwargs):
+    
+    X,y = XYsplit(df, label_col)
+    clf = re_algo(**kwargs)
+    selector = RFECV(estimator=clf, step=1, cv=10)
+    selector = selector.fit(X,y)
+    feature_list = X.columns[selector.support_].tolist()
+    if regression:
+        cross_valid_method = cross_valid_kfold
+    else:
+        cross_valid_method = cross_valid_stratified_kf
+    results = run_algorithms_cv(df, label_col, algo_list=algo_list, feature_list=feature_list, cross_valid_method=cross_valid_method)
+    return {"selected_features": feature_list, "results": results}
+
+```
+
+
+```python
+# Helper function to provide list of classification algorithms to be used for recursive elimination feature selection
+def get_supported_algorithms_refs():
+    algo_list = [LogisticRegression, GradientBoostingClassifier, AdaBoostClassifier,
+                          DecisionTreeClassifier, RandomForestClassifier]
+    return algo_list
+
+# Helper function to provide list of regression algorithms to be used for recursive elimination feature selection
+def get_supported_reg_algorithms_refs():
+    algo_list = [LinearRegression, RandomForestRegressor,
+                 DecisionTreeRegressor, GradientBoostingRegressor, AdaBoostRegressor]
+    return algo_list
+```
+
+### *Feature Selection Using PCA*
+
+
+```python
+#Without Cross Validation
+def PCA_FS(df, label_col, n_components, algo_list=get_supported_algorithms()):
+    df_cpy = df.copy()
+    X,y = XYsplit(df_cpy, label_col)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    
+    # First we need to normalize the data
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+    
+    # Now perform PCA
+    pca = PCA(n_components=n_components)
+    X_train = pca.fit_transform(X_train)
+    X_test = pca.transform(X_test)
+    
+    algo_model_map = {}
+    # At this stage we apply alogorithms
+    for algo in algo_list:
+        print("============ " + algo.__name__ + " ===========")
+        res = algo(X_train, X_test, y_train, y_test)
+        algo_model_map[algo.__name__] = res.get("model_obj", None)
+        
+        print("============================== \n")
+    return {"n_components": n_components, "results": algo_model_map}
+```
+
+### *With Cross Validation*
+
+
+```python
+#### With Cross Validation
+def PCA_FS_CV(df, label_col, n_components, algo_list=get_supported_algorithms(), regression=False):
+    df_cpy = df.copy()
+    X,y = XYsplit(df_cpy, label_col)
+    
+    cross_valid_method = cross_valid_kfold if regression else cross_valid_stratified_kf 
+    result = {}
+    algo_model_map = {}
+    for algo in algo_list:
+        clf = None
+        result[algo.__name__] = dict()
+        for X_train,y_train,X_test,y_test in cross_valid_method(X, y, split=10):
+            # First we need to normalize the data
+            sc = StandardScaler()
+            X_train = sc.fit_transform(X_train)
+            X_test = sc.transform(X_test)
+            
+            # Now perform PCA
+            pca = PCA(n_components=n_components)
+            X_train = pca.fit_transform(X_train)
+            X_test = pca.transform(X_test)
+            
+            # apply algo on this fold and save result for later usage
+            res_algo = algo(X_train, X_test, y_train, y_test, verbose=False, clf=clf)
+            # Get trained model so we could use it again in the next iteration
+            clf = res_algo.get("model_obj", None)
+            
+            for k,v in res_algo.items():
+                if k == "model_obj":
+                    continue
+                if k not in result[algo.__name__].keys():
+                    result[algo.__name__][k] = list()
+                result[algo.__name__][k].append(v)
+            
+        algo_model_map[algo.__name__] = clf
+        
+    
+    score_map = dict()
+    # let take average scores for all folds now
+    for algo, metrics in result.items():
+        print("============ " + algo + " ===========")
+        score_map[algo] = dict()
+        for metric_name, score_lst in metrics.items():
+            score_map[algo][metric_name] = np.mean(score_lst)
+        print(score_map[algo])
+        print ("============================== \n")
+        score_map[algo]["model_obj"] =  algo_model_map[algo]
+    return {"n_components": n_components, "results": algo_model_map}
 ```
