@@ -361,8 +361,7 @@ messages['length'].plot.hist(bins=150)
 
 
 
-![png](Spam_Detector_using_NLTK_files/Spam_Detector_using_NLTK_18_1.png)
-
+<img src="{{ site.url }}{{ site.baseurl }}/images/spam/1.png">
 
 
 ```python
@@ -413,8 +412,8 @@ messages.hist(column='length',by='label',bins=60,figsize=(12,4))
 
 
 
-![png](Spam_Detector_using_NLTK_files/Spam_Detector_using_NLTK_22_1.png)
 
+<img src="{{ site.url }}{{ site.baseurl }}/images/spam/2.png">
 
 
 ```python
