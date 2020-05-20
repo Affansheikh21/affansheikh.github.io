@@ -356,10 +356,6 @@ messages['length'].plot.hist(bins=150)
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x2a1b99d6ac8>
-
-
-
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/spam/1.png">
 
