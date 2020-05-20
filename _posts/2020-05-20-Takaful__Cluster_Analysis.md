@@ -4,7 +4,7 @@ date: 2020-05-20
 tags: [k-means, clustering, python, Insurance]
 categories: machinelearning
 header:
-  image: "/images/abc.png"
+  image: "/images/cluster.png"
 excerpt: "Analyzing Insurance Customers"
 mathjax: "true"
 ---
