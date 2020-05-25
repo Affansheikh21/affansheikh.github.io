@@ -1,6 +1,6 @@
 ---
 title: "ExplorAid"
-date: 2020-05-20
+date: 2020-05-26
 tags: [eda, python, data cleaning , data science]
 categories: machinelearning
 header:
@@ -19,7 +19,6 @@ mathjax: "true"
 
 
 
-# ExplorAid
 
 ExplorAid is an Exploratory Data Analysis Tool which helps you understand the data in an easy way. It would give you a basic idea of what the data is like.
 
