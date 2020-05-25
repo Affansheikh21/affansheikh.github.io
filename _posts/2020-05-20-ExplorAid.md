@@ -32,17 +32,23 @@ Apart from the basic EDA functions. It also provides the functionality of perfor
 
 
 
-#### [Check Github Repository:](https://github.com/dataoptimal)
+### [Check Github Repository](https://github.com/Affansheikh21/ExplorAid)
 
 ### Demo:
-
+#### Upload your dataset into the datasets folder of the repository
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/1.png"> 
+
+#### Explore your dataset
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/2.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/3.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/4.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/5.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/6.png">
+
+#### Visualize your dataset by using the Data Visualization features
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/7.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/8.png">  
+
+#### Make charts of your choice using particular features
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/9.png">
 <img src="{{ site.url }}{{ site.baseurl }}/images/ss/10.png">
