@@ -4,7 +4,7 @@ permalink: /data-visualizations/
 title: "Data Visualizations"
 author_profile: true
 header:
-  image: "/images/head.png"
+  image: "/images/dataviz.png"
 ---
 
 
