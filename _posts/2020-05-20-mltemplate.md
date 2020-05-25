@@ -28,7 +28,7 @@ mathjax: "true"
 </ol>   
  
 
-  ### [2- Model Development](#md)
+### [2- Model Development](#md)
 
 <ol>
 <li>Features Selection</li>
