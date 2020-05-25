@@ -1,7 +1,7 @@
 ---
 title: "Machine Learning Template"
 date: 2020-05-20
-tags: [machine learning]
+tags: [machine learning, python, classification, regression]
 categories: machinelearning
 header:
   image: "/images/mltemplate/header.jpg"
@@ -14,13 +14,6 @@ mathjax: "true"
 
 
 
-
-
-
-### Mohammad Affan Sheikh
-<font color='maroon'><h3>Institute of Business Administration Karachi (IBA)</h3></font>
-#### LinkedIn: [view profile](https://www.linkedin.com/in/mohammad-affan-sheikh/) 
-#### Github: [view profile](https://github.com/Affansheikh21)
 
 <h2>This is a Python Template which provides generic functions for carrying out Data Analysis and developing a Machine Learning Model</h2>
 
