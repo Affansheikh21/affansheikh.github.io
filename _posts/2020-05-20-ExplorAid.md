@@ -5,7 +5,7 @@ tags: [eda, python, data cleaning , data science]
 categories: machinelearning
 header:
   image: "/images/exploraid.png"
-excerpt: "Exploratory Data Analysis Tool"
+excerpt: "A No-Code Exploratory Data Analysis Tool. It uses Streamlit to convert EDA functions into point-and-click features"
 mathjax: "true"
 ---
 
