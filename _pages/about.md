@@ -24,7 +24,6 @@ Led a team of 10 individuals to head the registration process of Flagship event,
 
 IBA Entrepreneurship Summer School             
 - Executive Director - Corporate Affairs 
-
 Received and catered 3 bloggers from Germany, and Mexico for 10-day summer school.
 
 OTHER EXPERIENCES: 
