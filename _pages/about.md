@@ -24,6 +24,7 @@ IBA Arts and Photography Society
 
 IBA Entrepreneurship Summer School             
 - Executive Director - Corporate Affairs 
+
 • Received and catered 3 bloggers from Germany, and Mexico for 10-day summer school.
 
 OTHER EXPERIENCES: 
