@@ -20,12 +20,11 @@ I have worked with the following organizations:
 LEADERSHIP EXPERIENCES  
 IBA Arts and Photography Society             
 - Executive Director - Registrations  
-• Led a team of 10 individuals to head the registration process of Flagship event, ENIGMA, and successfully raised a revenue of 1.1 million and catered more than 1800 participants.
+Led a team of 10 individuals to head the registration process of Flagship event, ENIGMA, and successfully raised a revenue of 1.1 million and catered more than 1800 participants.
 
 IBA Entrepreneurship Summer School             
 - Executive Director - Corporate Affairs 
-
-• Received and catered 3 bloggers from Germany, and Mexico for 10-day summer school.
+Received and catered 3 bloggers from Germany, and Mexico for 10-day summer school.
 
 OTHER EXPERIENCES: 
 - Dean’s List 2018-19. Received 50% Merit Scholarship 
